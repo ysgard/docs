@@ -1,0 +1,101 @@
+#+TITLE: Learning Rust
+
+* Syntax and Basics
+
+** Simple Math (addition, subtraction, powers, modulo, square roots)
+*** Operators
+** Increment/decrement int
+** Write/Use logical/comparison/bitwise operators
+** Declare variables
+** Conditionals 
+*** If/Else
+*** Switch
+*** For
+*** Case/Match
+** Iterate over an iterable type/range
+** Write a loop
+** Declare a function/method/lambda
+** What is null?
+
+** Strings
+*** Declare
+*** Printing
+*** Formatting
+*** Concatenating
+*** Upcase/Downcase
+*** Sorting
+*** Splitting
+*** Substrings/Splicing
+** Lists
+*** Declare
+*** Indexing
+*** Sorting
+*** Joining
+*** Adding
+*** Removing
+*** Appending
+** Sets
+*** Declare
+*** Union
+*** Intersection
+*** Difference
+** Hashtables
+*** Declare
+*** Getting
+*** Setting
+*** Removing
+** Ranges
+*** Declaring
+*** Inclusive/Exclusive
+*** Iterating
+
+** Scoping and Namespaces
+*** Global/file/block scopes?
+
+* Functional Constructs
+
+* Mutable/Immutable Variable Notes
+
+* Functions and Argument Passing
+** How are Functions declared
+** Argument passing - value/reference?
+** Return Values
+** References
+
+* Structs and Traits
+** Struct Declaration
+** Methods on structs
+** Traits
+*** Declaration
+*** Implementation for...
+
+* Boxes and Memory Management
+
+* Modules and Crates
+** Scopes
+** Modules
+** Crates
+
+* Ecosystem and Tools
+** Package Manager
+** Test Framework
+** Standard Debugger
+** Version Manager
+
+* Philosophy & Conventions
+** Style Guide
+** Idioms
+** Documentation Sources
+
+* Common Gotchas
+
+* Common Tasks
+** Traverse a filesystem
+** Read/Write from/to files
+** Parse JSON/XML/CSV or some other formate
+** Use regular expressions
+** Send HTTP requests
+** Use Unicode
+
+
+
