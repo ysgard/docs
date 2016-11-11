@@ -2,24 +2,252 @@
 
 * Syntax and Basics
 
+** Comments
+#+BEGIN_SRC rust
+   // Line comments
+   /// Doc comments suport markdown
+   //! comment containing items (crates, modules or functions)
+#+END_SRC
+** Types
+*** Bools
+    let x: bool = true;
+    let y: bool = false;
+*** Char
+    let x = 'x';
+*** Numbers
+    Signed Integers: i8, i16, i32, i64
+    Unsigned Integers: u8, u16, u32, u64
+    Floats: f32
+    Double: f64
+    Pointers: isize, usize
 ** Simple Math (addition, subtraction, powers, modulo, square roots)
-*** Operators
+*** Simple
+    Addition: +
+    Subtraction: -
+    Multiplication: *
+    Division: /
+*** Modulo
+    Remainder: %
+*** Powers
+    x.pow(n) -> returns x raised to the nth power
+*** Square Root
+    x.sqrt(n)
+*** Grouped
+    The + - * / % & | ^ << >> operators can be grouped with '='
+    e.g. +=, *=, &=, >>=
+** Precedence
+*** Operator precedence (strong to weak)
+    as :
+    * / %
+    + -
+    << >>
+    &
+    ^
+    |
+    == != < > <= >=
+    &&
+    ||
+    .. ...
+    <-
+    =
+** Casting
+   Cast a variable as another type:
+#+BEGIN_SRC rust
+   let x: i32 = 4;
+   let x_sqrt: i64 = (x as i64).sqrt();
+
+   fn average(values *[f64]) -> f64 {
+       let sum: f64 = sum(values);
+       let size: f64 = len(values) as f64;
+       sum / size
+   }
+#+END_SRC  
 ** Increment/decrement int
+#+BEGIN_SRC rust
+   let mut x: i32 = 32;
+   x += 1;
+   x -= 1;
+#+END_SRC
 ** Write/Use logical/comparison/bitwise operators
+*** Comparison operators
+    == Equal (PartialEq->eq)
+    != Not Equal (PartialEq->ne)
+    < Less than (PartialOrd->lt)
+    > Greater than (PartialOrd->gt)
+    >= Greater than or equal (PartialOrd->le)
+    <= Less than or equal (PartialOrd->ge)
+*** Logical
+**** && lazy and
+**** || lazy or
+**** ! not
+*** Bitwise operators
+    & bitwise and (BitAnd->bitand)
+    | bitwise or (BitOr->bitor)
+    ^ bitwise xor (BitXor->bitxor)
+    << left shift (Shl->shl)
+    >> right shift (Shr->shr)
 ** Declare variables
-** Conditionals 
+   Variables are immutable by default
+#+BEGIN_SRC rust
+   let x = 5;
+#+END_SRC
+*** Type annotations
+#+BEGIN_SRC rust
+   let x: i32 = 5;
+#+END_SRC
+*** Patterns
+#+BEGIN_SRC rust
+    let (x, y) = (1, 2);
+#+END_SRC 
+*** Mutable/Immutable
+#+BEGIN_SRC rust
+    let mut x = 5;
+    x = 10;
+#+END_SRC
+*** Static/Const
+    - Const must be explicitely types
+#+BEGIN_SRC rust
+   const ASTRING: &'static str = "bitstring";
+   const ASIZE: u32 = 67800;
+#+END_SRC
+    - 
+*** References
+*** Runtime debug of a variable
+    The following will throw a compiler error that identifies the type
+    of foo
+#+BEGIN_SRC rust
+   let _: () = foo
+#+END_SRC
+** Conditionals & Loops
+   Break loops with `break` or `return`
 *** If/Else
-*** Switch
+#+BEGIN_SRC rust
+   if x == 5 {
+      println!("x is five!");
+   } else if x == 6 {
+      println!("x is six!");
+   } else {
+      println!("Not five or six");
+   }
+#+END_SRC
+    Note that if is an expression, so it returns the value of the last
+    expression in whatever branch was chosen.  
+#+BEGIN_SRC rust
+   let y = if x == 5 { 10 } else { 15 };
+#+END_SRC
 *** For
-*** Case/Match
+    for var in expression {
+        code
+    }
+    Where 'expression' can be converted into an iterator using IntoIterator
+#+BEGIN_SRC rust
+   for x in 0..10 {
+      println("{}", x); 
+   }
+#+END_SRC
+**** Figuring out how many times you've looped
+     Use .enumerate():
+#+BEGIN_SRC rust
+   for (index, value) in (5..10).enumerate() {
+      println!("index = {} and value = {}", index, value);
+   }
+#+END_SRC
+**** Using Labels:
+#+BEGIN_SRC rust
+   'outer: for x in 0..10 {
+      'inner: for y in 0..10 {
+         if x % 2 == 0 { continue 'outer; } // continues the loop over x
+         if y % 2 == 0 { continue 'inner; } // continues the loop over y
+         println!("x: {}, y: {}", x, y);
+      }
+   }
+#+END_SRC
+*** loop
+#+BEGIN_SRC rust 
+   loop {
+      println!("loop forever");
+   }
+#+END_SRC
+*** Match
+    match expression {
+        val => expression,
+        val => expression,
+        _ => default_expression,
+    }
+    Match is an expression
+#+BEGIN_SRC rust
+   let x = 5;
+   let number: String = match x {
+      1 => "one",
+      2 => "two",
+      _ => "something else",
+   };
+#+END_SRC
+*** while
+#+BEGIN_SRC rust
+while !done {
+   x += x - 3;
+   if x % 5 == 0 {
+      done = true;
+   }
+}
+#+END_SRC
 ** Iterate over an iterable type/range
+#+BEGIN_SRC rust
+
+#+END_SRC
 ** Write a loop
 ** Declare a function/method/lambda
 ** What is null?
+** Enums
+*** Matching on an enum
+#+BEGIN_SRC rust
+   enum Message {
+      Quit,
+      ChangeColor(i32, i32, i32),
+      Move { x: i32, y: i32 },
+      Write(String),
+   }
+   fn quit() { /*...*/ }
+   fn change_color(r: i32, g: i32, b: i32) { /*...*/ }
+   fn move_cursor(x: i32, y: i32) { /*...*/ }
+
+   fn process_message(msg: Message) {
+      match msg {
+         Message::Quit => quit(),
+         Message::ChangeColor(r, g, b) => change_color(r, g, b),
+         Message::Move { x: x, y: y } => move_cursor(x, y),
+         Message::Write(s) => println!("{}", s),
+      };
+   }
+#+END_SRC
 
 ** Strings
 *** Declare
 *** Printing
+**** Use println!, print!, format! and write!
+ #+BEGIN_SRC rust
+   println!("{}", something_to_print);
+ #+END_SRC
+**** '{}' formatting
+     | {..}        | Formats     |
+     | unspecified | Debug       |
+     | d or i      | Signed      |
+     | u           | Unsigned    |
+     | b           | Bool        |
+     | c           | Char        |
+     | o           | Octal       |
+     | x           | Lowerhex    |
+     | X           | Upperhex    |
+     | s           | String      |
+     | p           | Pointer     |
+     | t           | Binary      |
+     | f           | Float       |
+     | e           | LowerExp    |
+     | E           | UpperExp    |
+     | ?           | Poly        |
+     | .n          | n precision |
+     |             |             |
 *** Formatting
 *** Concatenating
 *** Upcase/Downcase
@@ -53,6 +281,26 @@
 *** Global/file/block scopes?
 
 * Functional Constructs
+** Rust Iterators/Adapters/Consumers
+   ITERATOR -> ADAPTER -> ADAPTER -> CONSUMER
+*** Iterators
+    Implement the Iterator trait, which provides next()
+    - iter() iterates over &T
+    - iter_mut() iterates over &mut T
+    - inter_iter() iterates over T
+*** Adapters 
+    Take an iterator, provide some sort of modification, and yields
+    another iterator
+    - filter() takes a closure that filters out unwanted elements
+    - map() Applies a closure to each element
+    - take() Takes the first n elements
+    - chain() Takes another iterator and appends it
+    - zip() Takes another iterator and returns an iterator that
+      returns pairs of the two iterators
+    - filter_map() Takes a closure that must return an Option<T>,
+      allowing both filtering and mapping
+    - enumerate() returns (i, val) where i is the current count
+    - peekable() Adds a peek() methos to an iterator, allowint
 
 * Mutable/Immutable Variable Notes
 
